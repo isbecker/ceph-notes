@@ -81,7 +81,7 @@ the `Objecter::_calc_target()` function is a member of the `Objecter` class. It 
 ```
 
 - Objecter->osdmap is a pointer to the current OSDMap
-- osdmap->pg_to_up_acting_osds called if the `lookup_pg_mapping` function returns false, which means the mapping is not cached and needs to be recalculated
+- `osdmap->pg_to_up_acting_osds` called if the `lookup_pg_mapping` function returns false, which means the mapping is not cached and needs to be recalculated
 
 ```cpp
 lookup_pg_mapping(const pg_t& pg, epoch_t epoch, std::vector<int> *up,
