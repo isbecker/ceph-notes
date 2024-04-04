@@ -142,7 +142,7 @@ void OSDMap::_pg_to_raw_osds(
 
 OSDs are the backbone of the Ceph storage cluster. Each OSD daemon runs on a storage node in the cluster and is responsible for storing data, handling data replication, recovery, rebalancing, and providing capacity and health information to the Ceph Monitors, which oversee the cluster's state.
 
-- **Storage and Replication**: Each OSD stores "objects", which are the fundamental units of storage in Ceph. Objects are typically replicated across multiple OSDs for redundancy, according to the replication policy defined at the pool level. The default replication factor is usually three, meaning each object is stored on three different OSDs.
+- **Storage and Replication**: Each OSD stores "objects", which are the fundamental units of storage in Ceph. Objects are typically replicated across multiple OSDs for redundancy, according to the replication policy defined at the pool level.
 - **Heartbeating and Monitoring**: OSDs continuously heartbeat to each other and to Monitors, ensuring the cluster is aware of each OSD's status (up or down) and its capacity.
 - **Data Distribution and Rebalancing**: OSDs use the CRUSH algorithm (Controlled Replication Under Scalable Hashing) to efficiently distribute data across the cluster and rebalance data when OSDs are added or removed, ensuring even distribution and optimizing data availability and performance.
 
@@ -173,7 +173,7 @@ Placement Groups (PGs) are a logical partitioning of objects within a pool. PGs 
 ## Day 5+6 (04/03+04)
 
 - worked on understanding more about components
-- made [diagram for CRUSH algorithm](diagram.md#mermaid-diagram)
+- made [diagram for CRUSH algorithm](diagram.md#crush-diagram)
 - made [diagram for interactions between components](diagram.md#interactions-between-ceph-components)
 - made [diagram for cluster map](diagram.md#cluster-map-focused-diagram)
 
