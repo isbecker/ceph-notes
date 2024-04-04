@@ -59,7 +59,7 @@ This is a graphviz diagram that I found in the Ceph docs. For some reason, the d
   }
 ```
 
-## Mermaid diagram
+## Mermaid diagrams
 
 I made this diagram based on Ceph docs on [CRUSH maps](https://docs.ceph.com/en/latest/rados/operations/crush-map/)
 
@@ -93,6 +93,33 @@ flowchart TD
     P --> S[Data Accessibility]
     Q --> T[Data Reliability]
     R --> U[Storage Optimization]
+```
+
+## Interactions between Ceph components
+
+[![Interactions diagram](https://mermaid.ink/img/pako:eNpVk02P2jAQhv-K5cOeslHCNzlUWhIKKxWBoHtp2INJBnBr7NR2aCnhv3fiZCnNJdH4mZl33omvNFM50IjuhfqVHZm25OtkKwk-L2kMxZHEgoO05p08P3-qNiBzQzT8LMFYU5FJutx9h8yCfm-SJg5bsMIQ5U4MsYqsZsjGKb5aLHZYAph44hJysrtUJEnj9dtmTl7EQWluj6cWThy8EiwDU5ciSlpVkWm63CSGtNC00WeVho_OFfncyjP_QWsoBM-Y5UqSJ7KGTJ1BY__pHfKRmgOasQPE5KEis3ShJMfqH6VmrtQSMw2grEyUBochxjILiD_2S5hlJOHGar4r7113TDCZueJt43m6Ukq0Tn9RB9QoSIEqeJ3kyLglW_v26B1u4984As4gvNokjzRm6lIAOjG_q_bdfiQ7PIQbh99MHXqtbcUFtnO-NuZrdeb5w5wFz2yJVj-5iUvzOLLfeKw0Lr85RSxjBcu4vThwK6lHT7h7xnP896516pbaI5xgSyP8zJn-saVbeUOOlVZtLjKjkdUleLQscvQ44eyg2YlGeyYMRgsmaXSlv2k07PnjYNgddEfjcBCE_YFHLzQKRwN_0Ol3-uPueNwLe8Hg5tE_SmGFwB8Og35vNAq6Qb_THYahRyGvl71o7oa7Iq7FN5dQ67j9BanKBvY?type=png)](https://mermaid.live/edit#pako:eNpVk02P2jAQhv-K5cOeslHCNzlUWhIKKxWBoHtp2INJBnBr7NR2aCnhv3fiZCnNJdH4mZl33omvNFM50IjuhfqVHZm25OtkKwk-L2kMxZHEgoO05p08P3-qNiBzQzT8LMFYU5FJutx9h8yCfm-SJg5bsMIQ5U4MsYqsZsjGKb5aLHZYAph44hJysrtUJEnj9dtmTl7EQWluj6cWThy8EiwDU5ciSlpVkWm63CSGtNC00WeVho_OFfncyjP_QWsoBM-Y5UqSJ7KGTJ1BY__pHfKRmgOasQPE5KEis3ShJMfqH6VmrtQSMw2grEyUBochxjILiD_2S5hlJOHGar4r7113TDCZueJt43m6Ukq0Tn9RB9QoSIEqeJ3kyLglW_v26B1u4984As4gvNokjzRm6lIAOjG_q_bdfiQ7PIQbh99MHXqtbcUFtnO-NuZrdeb5w5wFz2yJVj-5iUvzOLLfeKw0Lr85RSxjBcu4vThwK6lHT7h7xnP896516pbaI5xgSyP8zJn-saVbeUOOlVZtLjKjkdUleLQscvQ44eyg2YlGeyYMRgsmaXSlv2k07PnjYNgddEfjcBCE_YFHLzQKRwN_0Ol3-uPueNwLe8Hg5tE_SmGFwB8Og35vNAq6Qb_THYahRyGvl71o7oa7Iq7FN5dQ67j9BanKBvY)
+
+### Mermaid code for the interactions diagram
+
+Again, this should render in GitHub. If not, see the static image.
+
+```mermaid
+flowchart TB
+    A[Ceph Clients] -->|Sends requests| B[Objecter]
+    B -->|Maps objects to PGs| C[PGs]
+    C -->|Determined by| D[CRUSH Algorithm]
+    D -->|Places PGs onto| E[OSDs ]
+    E -->|Store objects| F[Objects]
+    E -->|Replication & Recovery| E
+    E -.->|Heartbeating| G[Monitors]
+    G -->|Oversees cluster state| G
+    E -->|Data Distribution & Rebalancing| E
+    H[Pools] -->|Logical partitioning| C
+    H -->|Define replication level, PGs, CRUSH rules| H
+    G -.->|Manages| H
+    D -->|Uses| I[OSDMap]
+    I -->|Provides cluster picture & status| G
+    E -.->|Reports status & capacity| G
 ```
 
 [1]: <https://dreampuf.github.io/GraphvizOnline/#%20%20%20digraph%20object_store%20%7B%0A%20%20%20%20size%3D%227%2C7%22%3B%0A%20%20%20%20node%20%5Bcolor%3Dlightblue2%2C%20style%3Dfilled%2C%20fontname%3D%22Serif%22%5D%3B%0A%0A%20%20%20%20%22testrados%22%20-%3E%20%22librados%22%0A%20%20%20%20%22testradospp%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22rbd%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radostool%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosgw-admin%22%20-%3E%20%22radosgw%22%0A%0A%20%20%20%20%22radosgw%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosacl%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22librados%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22ObjectCacher%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22dumpjournal%22%20-%3E%20%22Journaler%22%0A%0A%20%20%20%20%22Journaler%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22Filer%22%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22Filer%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22objecter%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22PG%22%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22ObjectStore%22%0A%0A%20%20%20%20%22crushtool%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMap%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMapTool%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PG%22%20-%3E%20%22PrimaryLogPG%22%0A%20%20%20%20%22PG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ObjectStore%22%20-%3E%20%22BlueStore%22%0A%0A%20%20%20%20%22BlueStore%22%20-%3E%20%22rocksdb%22%0A%20%20%7D>
