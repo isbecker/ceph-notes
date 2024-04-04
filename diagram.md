@@ -122,4 +122,40 @@ flowchart TB
     E -.->|Reports status & capacity| G
 ```
 
+## Cluster map focused diagram
+
+This diagram is based on the information found [here](https://docs.ceph.com/en/latest/architecture/#cluster-map)
+
+### Mermaid code for the cluster map diagram
+
+```mermaid
+flowchart TD
+    A[Ceph Cluster Map] --> B[Monitor Map]
+    A --> C[OSD Map]
+    A --> D[PG Map]
+    A --> E[CRUSH Map]
+    A --> F[MDS Map]
+    B --> G[Monitors]
+    C --> H[OSDs]
+    C --> I[Pools]
+    D --> J[Placement Groups]
+    E --> K[Storage Devices]
+    E --> L[Failure Domains]
+    F --> M[Metadata Servers]
+    N[Ceph Clients] --> O[Objecter]
+    O --> H
+    O --> I
+    O --> J
+    O --> E
+    G --> P[Cluster Members and State]
+    H --> P
+    I --> Q[Replica Sizes and PG Numbers]
+    J --> R[PG Version, Up Set, Acting Set, State]
+    K --> S[CRUSH Rules for Data Storage]
+    L --> S
+    M --> T[Metadata Storage Pool and Status]
+    P --> U[Master Copy with Cluster Health]
+
+```
+
 [1]: <https://dreampuf.github.io/GraphvizOnline/#%20%20%20digraph%20object_store%20%7B%0A%20%20%20%20size%3D%227%2C7%22%3B%0A%20%20%20%20node%20%5Bcolor%3Dlightblue2%2C%20style%3Dfilled%2C%20fontname%3D%22Serif%22%5D%3B%0A%0A%20%20%20%20%22testrados%22%20-%3E%20%22librados%22%0A%20%20%20%20%22testradospp%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22rbd%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radostool%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosgw-admin%22%20-%3E%20%22radosgw%22%0A%0A%20%20%20%20%22radosgw%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosacl%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22librados%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22ObjectCacher%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22dumpjournal%22%20-%3E%20%22Journaler%22%0A%0A%20%20%20%20%22Journaler%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22Filer%22%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22Filer%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22objecter%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22PG%22%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22ObjectStore%22%0A%0A%20%20%20%20%22crushtool%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMap%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMapTool%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PG%22%20-%3E%20%22PrimaryLogPG%22%0A%20%20%20%20%22PG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ObjectStore%22%20-%3E%20%22BlueStore%22%0A%0A%20%20%20%20%22BlueStore%22%20-%3E%20%22rocksdb%22%0A%20%20%7D>
