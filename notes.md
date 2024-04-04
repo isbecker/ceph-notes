@@ -53,9 +53,10 @@ the `Objecter::_calc_target()` function is a member of the `Objecter` class. It 
 - looked through call stack and investigated variables and values
 - makes sense because the original information I was given was:
 
-> ... study the code path that is exercised by a client when calculating the target OSD to send a read operation. The Objecter::_calc_target(op_target_t *t, Connection *con, bool any_change) function is used for this and can be found in src/osdc/Objecter.cc.
+> ... study the code path that is exercised by a client when calculating the target OSD to send a read operation. The Objecter::_calc_target(op_target_t *t, Connection*con, bool any_change) function is used for this and can be found in src/osdc/Objecter.cc.
 >
 > ... assume:
+>
 > - there is no tiering in use
 > - the target pool in question is a replicated pool
 > - the placement group id is not precalculated
@@ -168,6 +169,11 @@ Placement Groups (PGs) are a logical partitioning of objects within a pool. PGs 
 - **Mapping Objects to PGs**: When an object is stored in Ceph, it is assigned to a specific PG based on a hash of its name and other factors. The CRUSH algorithm then determines which OSDs are responsible for that PG.
 - **Efficiency and Scalability**: PGs allow Ceph to scale horizontally. By adjusting the number of PGs, administrators can balance the cluster's performance and management overhead. The number of PGs in a pool influences how evenly data and workload are distributed across the OSDs.
 - **Handling Failures and Recovery**: In the event of an OSD failure, Ceph only needs to recover and rebalance the affected PGs, rather than the entire dataset. This makes recovery operations more efficient.
+
+## Day 5+6 (04/03+04)
+
+- worked on understanding more about components
+- made [diagram for CRUSH algorithm](diagram.md#mermaid-diagram)
 
 [1]: <https://dreampuf.github.io/GraphvizOnline/#%20%20%20digraph%20object_store%20%7B%0A%20%20%20%20size%3D%227%2C7%22%3B%0A%20%20%20%20node%20%5Bcolor%3Dlightblue2%2C%20style%3Dfilled%2C%20fontname%3D%22Serif%22%5D%3B%0A%0A%20%20%20%20%22testrados%22%20-%3E%20%22librados%22%0A%20%20%20%20%22testradospp%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22rbd%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radostool%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosgw-admin%22%20-%3E%20%22radosgw%22%0A%0A%20%20%20%20%22radosgw%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22radosacl%22%20-%3E%20%22librados%22%0A%0A%20%20%20%20%22librados%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22ObjectCacher%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22dumpjournal%22%20-%3E%20%22Journaler%22%0A%0A%20%20%20%20%22Journaler%22%20-%3E%20%22Filer%22%0A%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22Filer%22%0A%20%20%20%20%22SyntheticClient%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22Filer%22%20-%3E%20%22objecter%22%0A%0A%20%20%20%20%22objecter%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22PG%22%0A%20%20%20%20%22ceph-osd%22%20-%3E%20%22ObjectStore%22%0A%0A%20%20%20%20%22crushtool%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMap%22%20-%3E%20%22CrushWrapper%22%0A%0A%20%20%20%20%22OSDMapTool%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PG%22%20-%3E%20%22PrimaryLogPG%22%0A%20%20%20%20%22PG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22ObjectStore%22%0A%20%20%20%20%22PrimaryLogPG%22%20-%3E%20%22OSDMap%22%0A%0A%20%20%20%20%22ObjectStore%22%20-%3E%20%22BlueStore%22%0A%0A%20%20%20%20%22BlueStore%22%20-%3E%20%22rocksdb%22%0A%20%20%7D>
 [2]: https://docs.ceph.com/en/latest/dev/osd_internals/osd_overview/
