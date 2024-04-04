@@ -19,8 +19,8 @@
   - code that calls `_calc_target` in `_scan_requests` did not run
   - `_scan_requests` was running frequently though
 - tried increasing logging
-- found a nice diagram of ceph architecture which included the `Objecter` class [here](diagram.md) originally from [here](https://docs.ceph.com/en/latest/dev/object-store/)
-  - online graphviz visual *\[[1]\]*, because the original diagram was not rendering properly in the page
+- found a nice diagram of ceph architecture which included the `Objecter` class [here](diagram.md#graphviz-of-ceph-components) originally from [here](https://docs.ceph.com/en/latest/dev/object-store/)
+  - online graphviz visual [1], because the original diagram was not rendering properly in the page
 
 the `Objecter::_calc_target()` function is a member of the `Objecter` class. It is defined in the `src/osdc/Objecter.cc` file. The function is used to calculate the target OSD for an object. The function is called by the a variety of functions in the `Objecter` class.
 

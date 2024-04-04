@@ -1,6 +1,6 @@
 # Diagrams
 
-## Graphviz
+## Graphviz of Ceph components
 
 This is a graphviz diagram that I found in the Ceph docs. For some reason, the diagram is not rendering on that page for me, so I copied it, and [here is a link to a rendered version][1]
 
