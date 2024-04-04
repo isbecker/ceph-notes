@@ -53,7 +53,7 @@ the `Objecter::_calc_target()` function is a member of the `Objecter` class. It 
 - looked through call stack and investigated variables and values
 - makes sense because the original information I was given was:
 
-> ... study the code path that is exercised by a client when calculating the target OSD to send a read operation. The Objecter::_calc_target(op_target_t *t, Connection*con, bool any_change) function is used for this and can be found in src/osdc/Objecter.cc.
+> ... study the code path that is exercised by a client when calculating the target OSD to send a read operation. The `Objecter::_calc_target(op_target_t *t, Connection *con, bool any_change)` function is used for this and can be found in src/osdc/Objecter.cc.
 >
 > ... assume:
 >
